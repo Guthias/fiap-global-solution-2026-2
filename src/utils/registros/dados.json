@@ -1,0 +1,38 @@
+
+{
+    "ultimo_id": 4,
+    "ocorrencias": [
+        {
+            "id": "001",
+            "categoria": "iluminacao",
+            "descricao": "Poste com lampada queimada",
+            "local": "Rua Central",
+            "data": 2,
+            "status": "aberta"
+        },
+        {
+            "id": "002",
+            "categoria": "acessibilidade",
+            "descricao": "Calcada com buracos",
+            "local": "Avenida Brasil",
+            "data": 3,
+            "status": "em analise"
+        },
+        {
+            "id": "003",
+            "categoria": "limpeza",
+            "descricao": "Acumulo de lixo na praca",
+            "local": "Praca Central",
+            "data": 4,
+            "status": "concluida"
+        },
+        {
+            "id": "004",
+            "categoria": "conservacao",
+            "descricao": "Banco publico danificado",
+            "local": "Praca das Flores",
+            "data": 5,
+            "status": "aberta"
+        }
+    ]
+}
