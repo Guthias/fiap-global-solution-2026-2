@@ -1,37 +1,36 @@
-
 {
     "ultimo_id": 4,
     "ocorrencias": [
         {
             "id": "001",
-            "categoria": "iluminacao",
             "descricao": "Poste com lampada queimada",
             "local": "Rua Central",
-            "data": 2,
+            "data": "30/01/2026",
+            "gravidade": "Media" ,
             "status": "aberta"
         },
         {
             "id": "002",
-            "categoria": "acessibilidade",
-            "descricao": "Calcada com buracos",
+            "descricao": "Acidente de carro",
             "local": "Avenida Brasil",
-            "data": 3,
+            "data": "11/01/2026",
+            "gravidade": "Alta" ,
             "status": "em analise"
         },
         {
             "id": "003",
-            "categoria": "limpeza",
             "descricao": "Acumulo de lixo na praca",
             "local": "Praca Central",
-            "data": 4,
+            "data": "02/05/2026",
+            "gravidade": "Baixa" ,
             "status": "concluida"
         },
         {
             "id": "004",
-            "categoria": "conservacao",
             "descricao": "Banco publico danificado",
             "local": "Praca das Flores",
-            "data": 5,
+            "data": "24/01/2026",
+            "gravidade": "Baixa" ,
             "status": "aberta"
         }
     ]
