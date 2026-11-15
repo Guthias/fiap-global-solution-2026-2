@@ -2,7 +2,7 @@ from utils.exibir_card import exibir_card
 from utils.input_numero import input_numero
 from utils.registros.cadastrar import cadastrar_ocorrencia
 from utils.registros.mostrar import listar_ocorrencias
-
+from utils.registros.analisar_dados import analisar_dados
 
 def menu_principal():
     exibir_card("Seja Bem-vindo!", "Escolha uma opção:", [
@@ -21,15 +21,19 @@ while True:
     opcao = input_numero("Digite a opção desejada: ")
     match opcao:
         case 1:
-            cadastrar_ocorrencia
+            cadastrar_ocorrencia()
+            input("Pressione Enter para continuar...")
+
         case 2:
             "Modulo de pesquisar registros"
         case 3:
             "Modulo de atualizar registro"
         case 4:
-            "Modulo de analise de dados"
+            analisar_dados()
+            input("Pressione Enter para continuar...")
         case 5:
-            listar_ocorrencias
+            listar_ocorrencias()
+            input("Pressione Enter para continuar...")
         case 0:
             print("Saindo do programa...")
             break

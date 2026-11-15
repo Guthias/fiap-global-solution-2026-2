@@ -1,31 +1,17 @@
 
-import json
+from utils.registros.arquivos import carregar_dados, salvar_dados
 from datetime import datetime
-
-
-def carregar_dados():
-    with open("../data/ocorrencias.json", "r", encoding="utf-8") as arquivo:
-        dados = json.load(arquivo)
-
-    return dados
-
-
-def salvar_dados(dados):
-    with open("../data/ocorrencias.json", "w", encoding="utf-8") as arquivo:
-        json.dump(dados, arquivo, indent=4, ensure_ascii=False)
-
 
 def verificar_data():
     while True:
         data = input("Digite a data (DD/MM/AAAA): ")
 
         try:
-            data_formatada = datetime.strptime(data, "%d/%m/%Y")
-            return data_formatada.strftime("%Y-%m-%d")
+            datetime.strptime(data, "%d/%m/%Y")
+            return data
 
         except ValueError:
             print("Data inválida! Tente novamente.")
-
 
 def identificar_gravidade(descricao):
 
@@ -60,9 +46,32 @@ def solicitar_texto(mensagem):
 
         print("Este campo não pode ficar vazio!")
 
+def selecionar_categoria():
+    while True:
+        print("\n--- CATEGORIAS ---")
+        print("1 - Iluminação")
+        print("2 - Acessibilidade")
+        print("3 - Limpeza")
+        print("4 - Conservação")
+
+        opcao = input("Selecione a categoria: ")
+
+        match opcao:
+            case "1":
+                return "Iluminacao"
+            case "2":
+                return "Acessibilidade"
+            case "3":
+                return "Limpeza"
+            case "4":
+                return "Conservacao"
+            case _:
+                print("Opção inválida! Escolha de 1 a 4.")
+
 def cadastrar_ocorrencia():
     dados = carregar_dados()
 
+    categoria = selecionar_categoria()
     descricao = solicitar_texto("Digite o que aconteceu: ")
     local = solicitar_texto("Digite o local: ")
 
@@ -74,6 +83,7 @@ def cadastrar_ocorrencia():
 
     nova_ocorrencia = {
         "id": novo_id,
+        "categoria": categoria,
         "descricao": descricao,
         "local": local,
         "data": data,
@@ -87,3 +97,4 @@ def cadastrar_ocorrencia():
 
     print("\nOcorrência cadastrada com sucesso!")
     print(f"Gravidade identificada: {gravidade}")
+
