@@ -1,3 +1,4 @@
+from repository.CsvRepository import CsvRepository
 from utils.exibir_card import exibir_card
 from utils.input_numero import input_numero
 from utils.registros.cadastrar import cadastrar_ocorrencia
@@ -11,6 +12,8 @@ def menu_principal():
         "3. Atualizar Registro",
         "4. Analise de Dados",
         "5. Mostrar ocorrencias"
+        "",
+        "404. Testes (REMOVER NA VERSÃO FINAL)"
         "",
         "0. Sair"
     ])
@@ -33,6 +36,11 @@ while True:
             input("Pressione Enter para continuar...")
         case 5:
             listar_ocorrencias()
+            input("Pressione Enter para continuar...")
+        case 404:
+            csv_repo = CsvRepository()
+            ocorrencias = csv_repo.listar_todos()
+            print(f"Total de ocorrencias: {len(ocorrencias)}")
             input("Pressione Enter para continuar...")
         case 0:
             print("Saindo do programa...")
