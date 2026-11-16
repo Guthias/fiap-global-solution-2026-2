@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 from enum import Enum
+from uuid import uuid4
 
 class Categoria(Enum):
     CONSERVACAO = "Conservação"
@@ -21,10 +22,11 @@ class Status(Enum):
 
 @dataclass
 class Ocorrencia:
-    id: str
     descricao: str
     local: str
-    data: date
+    
+    id: str = str(uuid4())
+    data: date = date.today()
     categoria: Categoria | None = None
     gravidade: Gravidade | None = None
     status: Status = Status.ABERTA

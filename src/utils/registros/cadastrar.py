@@ -1,17 +1,12 @@
 
+from uuid import uuid4
+
+from models.ocorrencia import Ocorrencia
 from utils.registros.arquivos import carregar_dados, salvar_dados
 from datetime import datetime
+from repository.CsvRepository import CsvRepository
 
-def verificar_data():
-    while True:
-        data = input("Digite a data (DD/MM/AAAA): ")
-
-        try:
-            datetime.strptime(data, "%d/%m/%Y")
-            return data
-
-        except ValueError:
-            print("Data inválida! Tente novamente.")
+csv_repo = CsvRepository()
 
 def identificar_gravidade(descricao):
 
@@ -46,55 +41,15 @@ def solicitar_texto(mensagem):
 
         print("Este campo não pode ficar vazio!")
 
-def selecionar_categoria():
-    while True:
-        print("\n--- CATEGORIAS ---")
-        print("1 - Iluminação")
-        print("2 - Acessibilidade")
-        print("3 - Limpeza")
-        print("4 - Conservação")
-
-        opcao = input("Selecione a categoria: ")
-
-        match opcao:
-            case "1":
-                return "Iluminacao"
-            case "2":
-                return "Acessibilidade"
-            case "3":
-                return "Limpeza"
-            case "4":
-                return "Conservacao"
-            case _:
-                print("Opção inválida! Escolha de 1 a 4.")
-
 def cadastrar_ocorrencia():
-    dados = carregar_dados()
-
-    categoria = selecionar_categoria()
     descricao = solicitar_texto("Digite o que aconteceu: ")
     local = solicitar_texto("Digite o local: ")
 
-    gravidade = identificar_gravidade(descricao)
-    data = verificar_data()
+    nova_ocorrencia = Ocorrencia(
+        descricao=descricao,
+        local=local,
+    )
 
-    dados["ultimo_id"] += 1
-    novo_id = str(dados["ultimo_id"]).zfill(3)
-
-    nova_ocorrencia = {
-        "id": novo_id,
-        "categoria": categoria,
-        "descricao": descricao,
-        "local": local,
-        "data": data,
-        "gravidade": gravidade,
-        "status": "em analise"
-    }
-
-    dados["ocorrencias"].append(nova_ocorrencia)
-
-    salvar_dados(dados)
+    csv_repo.adicionar_ocorrencia(nova_ocorrencia)
 
     print("\nOcorrência cadastrada com sucesso!")
-    print(f"Gravidade identificada: {gravidade}")
-

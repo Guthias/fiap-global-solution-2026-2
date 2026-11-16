@@ -11,6 +11,16 @@ from models.ocorrencia import (
 )
 
 class CsvRepository:
+    campos = [
+        "id",
+        "categoria",
+        "descricao",
+        "local",
+        "data",
+        "gravidade",
+        "status"
+    ]
+
     def __init__(self):
         self.arquivo = Path(__file__).resolve().parents[2] / "data" / "dados.csv"
         self.arquivo.parent.mkdir(parents=True, exist_ok=True)
@@ -19,19 +29,23 @@ class CsvRepository:
             self._criar_arquivo()
 
     def _criar_arquivo(self):
-        campos = [
-            "id",
-            "categoria",
-            "descricao",
-            "local",
-            "data",
-            "gravidade",
-            "status"
-        ]
 
         with self.arquivo.open("w", newline="", encoding="utf-8") as file:
-            writer = csv.DictWriter(file, fieldnames=campos)
+            writer = csv.DictWriter(file, fieldnames=self.campos)
             writer.writeheader()
+
+    def adicionar_ocorrencia(self, ocorrencia: Ocorrencia):
+        with self.arquivo.open("a", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=self.campos)
+            writer.writerow({
+                "id": ocorrencia.id,
+                "categoria": ocorrencia.categoria.value if ocorrencia.categoria else "",
+                "descricao": ocorrencia.descricao,
+                "local": ocorrencia.local,
+                "data": ocorrencia.data.isoformat(),
+                "gravidade": ocorrencia.gravidade.value if ocorrencia.gravidade else "",
+                "status": ocorrencia.status.value
+            })
 
     def listar_todos(self) -> list[Ocorrencia]:
         with self.arquivo.open("r", newline="", encoding="utf-8") as file:
