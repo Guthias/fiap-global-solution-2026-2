@@ -1,34 +1,10 @@
 
-from uuid import uuid4
-
 from models.ocorrencia import Ocorrencia
 from repository.CsvRepository import CsvRepository
+from services.classificacao import classificar_ocorrencia
 
 csv_repo = CsvRepository()
 
-def identificar_gravidade(descricao):
-
-    descricao = descricao.lower()
-
-    palavras_altas = [
-        "risco", "acidente", "perigo",
-        "fio caido", "bueiro aberto"
-    ]
-
-    palavras_medias = [
-        "buraco", "lampada queimada",
-        "calcada quebrada"
-    ]
-
-    for palavra in palavras_altas:
-        if palavra in descricao:
-            return "Alta"
-
-    for palavra in palavras_medias:
-        if palavra in descricao:
-            return "Media"
-
-    return "Baixa"
 
 def solicitar_texto(mensagem):
     while True:
@@ -47,6 +23,8 @@ def cadastrar_ocorrencia():
         descricao=descricao,
         local=local,
     )
+
+    classificar_ocorrencia(nova_ocorrencia)
 
     csv_repo.adicionar_ocorrencia(nova_ocorrencia)
 
