@@ -145,5 +145,73 @@
             "gravidade": "Baixa",
             "status": "aberta"
         }
+    ],
+    "historico": [
+        {
+            "id": "002",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "13/01/2026"
+        },
+        {
+            "id": "003",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "04/05/2026"
+        },
+        {
+            "id": "003",
+            "de": "em analise",
+            "para": "concluida",
+            "data": "08/05/2026"
+        },
+        {
+            "id": "006",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "14/02/2026"
+        },
+        {
+            "id": "008",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "17/02/2026"
+        },
+        {
+            "id": "008",
+            "de": "em analise",
+            "para": "concluida",
+            "data": "21/02/2026"
+        },
+        {
+            "id": "009",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "19/02/2026"
+        },
+        {
+            "id": "012",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "23/02/2026"
+        },
+        {
+            "id": "014",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "26/02/2026"
+        },
+        {
+            "id": "015",
+            "de": "aberta",
+            "para": "em analise",
+            "data": "27/02/2026"
+        },
+        {
+            "id": "015",
+            "de": "em analise",
+            "para": "concluida",
+            "data": "03/03/2026"
+        }
     ]
 }

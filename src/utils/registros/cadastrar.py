@@ -2,8 +2,6 @@
 from uuid import uuid4
 
 from models.ocorrencia import Ocorrencia
-from utils.registros.arquivos import carregar_dados, salvar_dados
-from datetime import datetime
 from repository.CsvRepository import CsvRepository
 
 csv_repo = CsvRepository()
