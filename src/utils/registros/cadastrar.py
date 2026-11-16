@@ -1,6 +1,6 @@
-
 from utils.registros.arquivos import carregar_dados, salvar_dados
 from datetime import datetime
+from utils.registros.atualizar import registrar_evento
 
 def verificar_data():
     while True:
@@ -88,10 +88,11 @@ def cadastrar_ocorrencia():
         "local": local,
         "data": data,
         "gravidade": gravidade,
-        "status": "em analise"
+        "status": "aberta"
     }
 
     dados["ocorrencias"].append(nova_ocorrencia)
+    registrar_evento(dados, novo_id, "", "aberta")
 
     salvar_dados(dados)
 
