@@ -40,3 +40,27 @@ class Ocorrencia:
 
         if repositorio:
             repositorio.atualizar_ocorrencia(self)
+
+    def atualizar_gravidade(self, nova_gravidade: Gravidade, repositorio=None):
+        self.gravidade = nova_gravidade
+
+        if repositorio:
+            repositorio.atualizar_ocorrencia(self)
+
+    def atualizar_categoria(self, nova_categoria: Categoria, repositorio=None):
+        self.categoria = nova_categoria
+
+        if repositorio:
+            repositorio.atualizar_ocorrencia(self)
+
+    def atualizar_descricao(self, nova_descricao: str, repositorio=None):
+        self.descricao = nova_descricao
+
+        if repositorio:
+            repositorio.atualizar_ocorrencia(self)
+
+    def atualizar_local(self, novo_local: str, repositorio=None):
+        self.local = novo_local
+
+        if repositorio:
+            repositorio.atualizar_ocorrencia(self)
