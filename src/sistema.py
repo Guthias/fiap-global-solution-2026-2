@@ -6,7 +6,7 @@ from services.cadastrar import cadastrar_ocorrencia
 from utils.registros.mostrar import listar_ocorrencias
 from utils.registros.analisar_dados import analisar_dados
 from utils.registros.atualizar import atualizar_ocorrencia
-
+from services.editar_ocorrencia import editar_ocorrencia
 def menu_principal():
     exibir_card("Seja Bem-vindo!", "Escolha uma opção:", [
         "1. Cadastrar nova Ocorrência",
@@ -14,6 +14,7 @@ def menu_principal():
         "3. Atualizar Ocorrência",
         "4. Análise de Dados",
         "5. Mostrar Ocorrências",
+        "6. Editar Ocorrências"
         "",
         "404. Testes (REMOVER NA VERSÃO FINAL)",
         "",
@@ -44,6 +45,10 @@ while True:
 
         case 5:
             listar_ocorrencias()
+            input("\nPressione Enter para continuar...")
+
+        case 6:
+            editar_ocorrencia()
             input("\nPressione Enter para continuar...")
 
         case 404:
