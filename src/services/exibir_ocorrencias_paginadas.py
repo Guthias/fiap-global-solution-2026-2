@@ -1,4 +1,5 @@
 from utils.exibir_card import exibir_card
+from services.visualizar_ocorrencia import visualizar_ocorrencia
 
 def exibir_ocorrencias_paginadas(ocorrencias, mensagem,  titulo="Resultado da Pesquisa"):
     if not ocorrencias:
@@ -34,13 +35,21 @@ def exibir_ocorrencias_paginadas(ocorrencias, mensagem,  titulo="Resultado da Pe
         opcao = input("Digite a opção desejada: ")
 
         match opcao.upper():
+            case "1" | "2" | "3" | "4" | "5":
+                index = int(opcao) - 1
+                if index < len(ocorrencias_da_pagina):
+                    visualizar_ocorrencia(ocorrencias_da_pagina[index])
+
             case "N":
                 if pagina < total_paginas - 1:
                     pagina += 1
+
             case "P":
                 if pagina > 0:
                     pagina -= 1
+
             case "B":
                 break
+
             case _:
                 pass

@@ -1,16 +1,4 @@
 id,categoria,descricao,local,data,gravidade,status
-005,Iluminacao,Poste com lampada queimada,Rua das Flores,2026-02-10,Media,Aberta
-006,Acessibilidade,Calcada sem rampa de acesso,Avenida Central,2026-02-12,Alta,em analise
-007,Limpeza,Acumulo de lixo na calcada,Rua Primavera,2026-02-14,Baixa,Aberta
-008,Conservacao,Banco publico quebrado,Praca da Matriz,2026-02-15,Baixa,concluida
-009,Iluminacao,Poste com fiacao exposta,Rua das Palmeiras,2026-02-17,Alta,em analise
-010,Acessibilidade,Calcada com buracos,Rua Brasil,2026-02-18,Media,Aberta
-011,Limpeza,Lixeira publica transbordando,Praca Central,2026-02-20,Baixa,Aberta
-012,Conservacao,Ponto de onibus danificado,Avenida Norte,2026-02-21,Media,em analise
-013,Iluminacao,Regiao sem iluminacao,Rua Sao Pedro,2026-02-23,Alta,Aberta
-014,Acessibilidade,Ausencia de piso tatil,Calcada da Avenida Sul,2026-02-24,Alta,em analise
-015,Limpeza,Descarte irregular de entulho,Rua das Acacias,2026-02-25,Media,concluida
-016,Conservacao,Praca com equipamentos danificados,Praca das Flores,2026-02-26,Baixa,Aberta
 55b5a67f-2424-4113-851d-5d73d2f27827,,Caiu uma Arvore,Alameda do Beija-flor,2026-11-16,,Aberta
 cdf37634-b19a-457b-9e63-b276dc4ce256,,Esta sem rampa proximo a escola,Rua da Arara,2026-11-16,,Aberta
 81b07a4c-792a-4f2b-a340-9f869d1ac62d,Conservação,Tem um buraco na rua,Rua do papagaio,2026-11-16,Média,Aberta
