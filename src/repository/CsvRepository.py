@@ -47,6 +47,28 @@ class CsvRepository:
                 "status": ocorrencia.status.value
             })
 
+    def atualizar_ocorrencia(self, ocorrencia: Ocorrencia):
+        ocorrencias = self.listar_todos()
+        for i, o in enumerate(ocorrencias):
+            if o.id == ocorrencia.id:
+                ocorrencias[i] = ocorrencia
+                break
+
+        with self.arquivo.open("w", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=self.campos)
+            writer.writeheader()
+            for o in ocorrencias:
+                writer.writerow({
+                    "id": o.id,
+                    "categoria": o.categoria.value if o.categoria else "",
+                    "descricao": o.descricao,
+                    "local": o.local,
+                    "data": o.data.isoformat(),
+                    "gravidade": o.gravidade.value if o.gravidade else "",
+                    "status": o.status.value
+                })
+
+
     def listar_todos(self) -> list[Ocorrencia]:
         with self.arquivo.open("r", newline="", encoding="utf-8") as file:
             reader = csv.DictReader(file)

@@ -30,3 +30,13 @@ class Ocorrencia:
     categoria: Categoria | None = None
     gravidade: Gravidade | None = None
     status: Status = Status.ABERTA
+
+    def atualizar_status(self, repositorio=None):
+        if self.status == Status.ABERTA:
+            self.status = Status.EM_ANALISE
+
+        elif self.status == Status.EM_ANALISE:
+            self.status = Status.CONCLUIDA
+
+        if repositorio:
+            repositorio.atualizar_ocorrencia(self)
