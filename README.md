@@ -337,8 +337,6 @@ Como limitações, o funcionamento depende da qualidade das informações cadast
 
 ## 14. Equipe
 
-**Nome da equipe:** [PREENCHER]
-
 | Integrante | RM |
 | --- | --- |
 | Gustavo Mathias | [RM: 575347] |
