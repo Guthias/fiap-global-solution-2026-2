@@ -341,11 +341,11 @@ Como limitações, o funcionamento depende da qualidade das informações cadast
 
 | Integrante | RM |
 | --- | --- |
-| Gustavo Mathias - [RM: 575347] |
-| Clara Mei - [RM: 575975] |
-| Vinicius Ramos - [RM: 575185] |
-| Daniel Turatti - [RM: 574215] |
-| Evellyn Soares - [RM: 576111] |
+| Gustavo Mathias | [RM: 575347] |
+| Clara Mei | [RM: 575975] |
+| Vinicius Ramos | [RM: 575185] |
+| Daniel Turatti | [RM: 574215] |
+| Evellyn Soares | [RM: 576111] |
 
 ---
 
