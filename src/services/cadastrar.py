@@ -1,10 +1,8 @@
-
 from models.ocorrencia import Ocorrencia
 from repository.CsvRepository import CsvRepository
 from services.classificacao import classificar_ocorrencia
 
 csv_repo = CsvRepository()
-
 
 def solicitar_texto(mensagem):
     while True:
