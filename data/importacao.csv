@@ -1,0 +1,8 @@
+id,categoria,descricao,local,data,gravidade,status
+7fb39f4b-8ea6-495e-a251-c25bf91d525e,Limpeza,Mato alto na calçada da escola,Rua das Acácias,2026-11-13,Baixa,Aberta
+4d16f3e5-6a3e-438c-9fa1-bb7ae9cf6586,Acessibilidade,Rampa de acesso com degrau alto,Rua Brasil,2026-11-14,Alta,Aberta
+65bed069-6ad9-4063-9e32-af65bcd3442e,Lazer,Quadra sem manutenção,Praça do Sul,2026-11-14,Baixa,Aberta
+9bc7b146-5a33-4bd1-8ac0-d8a435f00523,Limpeza,Entulho na esquina,Rua Primavera,31/02/2026,Baixa,Aberta
+81b07a4c-792a-4f2b-a340-9f869d1ac62d,Iluminação,Poste apagado na rua,Rua do Sol,2026-11-15,Média,Aberta
+d506f4e4-2b8d-4ed3-b367-0a113a3bb374,Conservação,Muro com rachaduras,Praça da Matriz,2026-11-15,Baixa,Resolvida
+a14a6be1-b4bc-44eb-8af2-0ec45f3b6b1e,Iluminação,ok,Rua Sao Pedro,2026-11-15,Média,Aberta

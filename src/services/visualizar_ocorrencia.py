@@ -44,10 +44,10 @@ def menu_editar_categoria(ocorrencia: Ocorrencia):
     while True:
         exibir_card("Editar Categoria", ocorrencia.id, [
             "Escolha a nova categoria:",
-            "   1 - Segurança",
-            "   2 - Saúde",
-            "   3 - Meio Ambiente",
-            "   4 - Infraestrutura",
+            "   1 - Conservação",
+            "   2 - Iluminação",
+            "   3 - Limpeza",
+            "   4 - Acessibilidade",
             "",
             "Navegação:",
             "   B - Voltar"
@@ -57,19 +57,19 @@ def menu_editar_categoria(ocorrencia: Ocorrencia):
 
         match opcao.upper():
             case "1":
-                ocorrencia.atualizar_categoria(Categoria.SEGURANCA, csv_repo)
+                ocorrencia.atualizar_categoria(Categoria.CONSERVACAO, csv_repo)
                 break
 
             case "2":
-                ocorrencia.atualizar_categoria(Categoria.SAUDE, csv_repo)
+                ocorrencia.atualizar_categoria(Categoria.ILUMINACAO, csv_repo)
                 break
 
             case "3":
-                ocorrencia.atualizar_categoria(Categoria.MEIO_AMBIENTE, csv_repo)
+                ocorrencia.atualizar_categoria(Categoria.LIMPEZA, csv_repo)
                 break
 
             case "4":
-                ocorrencia.atualizar_categoria(Categoria.INFRAESTRUTURA, csv_repo)
+                ocorrencia.atualizar_categoria(Categoria.ACESSIBILIDADE, csv_repo)
                 break
 
             case "B":

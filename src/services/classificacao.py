@@ -2,7 +2,6 @@ import json
 
 from models.ocorrencia import Categoria
 from models.ocorrencia import Gravidade
-from utils.google_genai import gerar_resposta_json
 
 def identificar_gravidade(descricao):
     descricao = descricao.lower()
@@ -60,6 +59,8 @@ def identificar_categoria(descricao):
     return None
 
 def analise_assistida_por_ia(descricao):
+    from utils.google_genai import gerar_resposta_json
+
     prompt = f"""
         Você é um assistente que classifica ocorrências urbanas.
         Analise a descrição abaixo e retorne somente um JSON válido, sem Markdown,

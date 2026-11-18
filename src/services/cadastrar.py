@@ -25,5 +25,6 @@ def cadastrar_ocorrencia():
     classificar_ocorrencia(nova_ocorrencia)
 
     csv_repo.adicionar_ocorrencia(nova_ocorrencia)
+    csv_repo.registrar_evento(nova_ocorrencia.id, "", nova_ocorrencia.status.value)
 
     print("\nOcorrência cadastrada com sucesso!")
