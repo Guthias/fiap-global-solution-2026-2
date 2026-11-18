@@ -3,3 +3,5 @@ id,categoria,descricao,local,data,gravidade,status
 cdf37634-b19a-457b-9e63-b276dc4ce256,,Esta sem rampa proximo a escola,Rua da Arara,2026-11-16,,Concluída
 81b07a4c-792a-4f2b-a340-9f869d1ac62d,Conservação,Tem um buraco na rua,Rua do papagaio,2026-11-16,Crítica,Aberta
 bcb00f83-7e25-4e7b-b6cc-d42049386071,,Sumiu a tampa do bueiro,Alameda do Universo,2026-11-16,Baixa,Aberta
+aebe3ab8-2f59-45b7-800f-35bc4e73c39b,Acessibilidade,A escola nao tem uma rampa de acesso,Escola Estadual dos Passaros,2026-11-17,Alta,Aberta
+17be1d05-a213-4a39-893c-6d7e3145f501,Iluminação,A rua poderia usar lampadas led nos postes,Alameda do Universo,2026-11-17,Baixa,Aberta
