@@ -17,7 +17,7 @@ while True:
     menu_principal()
     opcao = input("Digite a opção desejada: ")
 
-    match opcao:
+    match opcao.upper():
         case "1":
             cadastrar_ocorrencia()
             input("\nPressione Enter para continuar...")
@@ -25,7 +25,6 @@ while True:
         case "2":
             "Modulo de pesquisar registros"
             buscar_ocorrencias()
-            input("\nPressione Enter para continuar...")
 
         case "3":
             analisar_dados()
@@ -34,7 +33,3 @@ while True:
         case "B":
             print("Saindo do programa...")
             break
-
-        case _:
-            print("Modulo não implementado. Por favor, escolha uma opção válida.\n")
-            input("\nPressione Enter para continuar...")
