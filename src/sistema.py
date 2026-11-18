@@ -1,7 +1,7 @@
 from services.buscar_ocorrencias import buscar_ocorrencias
 from utils.exibir_card import exibir_card
 from services.cadastrar import cadastrar_ocorrencia
-from utils.registros.analisar_dados import analisar_dados
+from services.analisar_dados import analisar_dados
 
 def menu_principal():
     exibir_card("Seja Bem-vindo!", "Escolha uma opção:", [

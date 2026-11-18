@@ -22,7 +22,6 @@ def identificar_gravidade(descricao):
 
     return Gravidade.BAIXA
 
-
 def identificar_categoria(descricao):
     descricao = descricao.lower()
 

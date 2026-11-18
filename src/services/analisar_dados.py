@@ -1,7 +1,5 @@
-
 from repository.CsvRepository import CsvRepository
 from utils.exibir_card import exibir_card
-
 
 def analisar_dados():
     csv_repo = CsvRepository()
