@@ -4,6 +4,7 @@ from services.cadastrar import cadastrar_ocorrencia
 from services.analisar_dados import analisar_dados
 from services.historico import exibir_historico
 from services.importar import importar_e_validar
+from services.matriz import exibir_matriz
 
 def menu_principal():
     exibir_card("Seja Bem-vindo!", "Escolha uma opção:", [
@@ -12,6 +13,7 @@ def menu_principal():
         "3. Analisar Ocorrências",
         "4. Histórico de mudanças",
         "5. Importar e validar registros",
+        "6. Matriz e interpretação",
         "",
         "Navegação:",
         "   B - Sair do Programa"
@@ -40,6 +42,10 @@ while True:
 
         case "5":
             importar_e_validar()
+            input("\nPressione Enter para continuar...")
+
+        case "6":
+            exibir_matriz()
             input("\nPressione Enter para continuar...")
 
         case "B":

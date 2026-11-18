@@ -65,20 +65,39 @@ O funcionamento está organizado em etapas:
 5. **Acompanhamento:** atualização do status e da gravidade de uma ocorrência.
 6. **Análise:** organização dos dados para identificar quantidades, categorias e situações das demandas.
 
-Entre as funcionalidades identificadas nos módulos compartilhados estão o cadastro, a classificação, a busca de ocorrências, a exibição paginada, a visualização de detalhes, a edição de informações e a análise dos dados.
+Menu principal do sistema:
+
+| Opção | Funcionalidade |
+| --- | --- |
+| 1 | Cadastrar nova ocorrência (com classificação automática) |
+| 2 | Pesquisar ocorrências (todas ou por status, com paginação), ver detalhes e editar status, gravidade, categoria, descrição e local |
+| 3 | Analisar ocorrências (indicadores) |
+| 4 | Histórico de mudanças de situação |
+| 5 | Importar e validar registros (recusa registros inconsistentes) |
+| 6 | Matriz categoria × status, hierarquia de pendências e interpretação |
+| B | Sair |
+
+O fluxo de situação segue a ordem **Aberta → Em análise → Concluída**. Uma ocorrência concluída não volta atrás.
 
 ---
 
 ## 5. Tecnologias e armazenamento
 
-O projeto utiliza **Python** para desenvolver as funcionalidades e organizar as operações do sistema.
+O projeto utiliza **Python 3.10 ou superior** (usa `match/case`) para desenvolver as funcionalidades.
 
-Os dados são armazenados em arquivos locais, com destaque para:
+Os dados são armazenados em arquivos CSV na pasta `data/`:
 
-- `dados.csv`: arquivo utilizado pelo repositório CSV para armazenar e consultar registros.
-- `ocorrencias.json`: arquivo também presente na estrutura de dados do projeto.
+| Arquivo | Conteúdo |
+| --- | --- |
+| `dados.csv` | Ocorrências cadastradas (14 registros válidos iniciais). |
+| `historico.csv` | Eventos de mudança de situação (10 eventos iniciais). |
+| `importacao.csv` | Registros brutos aguardando validação (7 registros: 2 válidos e 5 inconsistentes). |
+| `rejeitados.csv` | Registros recusados pela validação, com o motivo. |
 
-O repositório responsável pelo CSV centraliza operações de leitura, cadastro e atualização das ocorrências. Essa organização permite separar as operações de armazenamento das demais funcionalidades do sistema.
+Os dados são **fictícios**. O repositório `CsvRepository` centraliza leitura, cadastro, atualização e registro de eventos.
+
+**Uso de IA (opcional):** a classificação automática pode usar o Gemini (`google-genai`). Sem a biblioteca ou sem chave,
+o sistema continua funcionando com a classificação por palavras-chave. Veja `docs/uso_ia.md`.
 
 ### Campos dos registros
 
@@ -98,14 +117,16 @@ Os campos identificados na estrutura CSV são:
 
 ## 6. Organização e estrutura do projeto
 
-O projeto está dividido em três pastas principais e dois arquivos externos. Dentro de `src`, as responsabilidades estão separadas em quatro subpastas e um arquivo principal.
+O projeto está dividido em três pastas principais. Dentro de `src`, as responsabilidades estão separadas em quatro subpastas e um arquivo principal.
 
 ```text
 fiap-global-solution-2026-2/
 │
 ├── data/
 │   ├── dados.csv
-│   └── ocorrencias.json
+│   ├── historico.csv
+│   ├── importacao.csv
+│   └── rejeitados.csv
 │
 ├── docs/
 │   ├── link_video.txt
@@ -113,35 +134,30 @@ fiap-global-solution-2026-2/
 │   └── uso_ia.md
 │
 ├── src/
-│   │
 │   ├── models/
 │   │   └── ocorrencia.py
-│   │
 │   ├── repository/
-│   │   └── CSVRepository.py
-│   │
+│   │   └── CsvRepository.py
 │   ├── services/
+│   │   ├── analisar_dados.py
 │   │   ├── buscar_ocorrencias.py
 │   │   ├── cadastrar.py
 │   │   ├── classificacao.py
-│   │   ├── editar_ocorrencia.py
 │   │   ├── exibir_ocorrencias_paginadas.py
+│   │   ├── historico.py
+│   │   ├── importar.py
+│   │   ├── matriz.py
+│   │   ├── validacao.py
 │   │   └── visualizar_ocorrencia.py
-│   │
 │   ├── utils/
-│   │   ├── registros/
-│   │   │   ├── analisar_dados.py
-│   │   │   ├── arquivos.py
-│   │   │   ├── atualizar.py
-│   │   │   ├── importar.py
-│   │   │   └── mostrar.py
-│   │   │
 │   │   ├── converter_enum.py
 │   │   ├── exibir_card.py
+│   │   ├── google_genai.py
 │   │   └── input_numero.py
-│   │
+│   ├── requirements.txt
 │   └── sistema.py
 │
+├── .env.example
 ├── .gitignore
 └── README.md
 ```
@@ -150,7 +166,7 @@ fiap-global-solution-2026-2/
 
 #### `data/`
 
-Armazena os arquivos utilizados para guardar os dados do projeto. Contém a base CSV e o arquivo JSON.
+Armazena os arquivos CSV utilizados para guardar os dados do projeto (ocorrências, histórico, importação e rejeitados).
 
 #### `docs/`
 
@@ -162,46 +178,39 @@ Contém o arquivo `ocorrencia.py`, responsável pela representação dos dados d
 
 #### `src/repository/`
 
-Contém `CSVRepository.py`, responsável pelas operações de acesso aos registros armazenados no CSV, incluindo leitura, cadastro e atualização.
+Contém `CsvRepository.py`, responsável pelas operações de acesso aos arquivos CSV: leitura, cadastro, atualização, inclusão de linhas importadas e registro/consulta do histórico.
 
 #### `src/services/`
 
 Reúne os módulos responsáveis pelas funcionalidades do sistema:
 
-| Arquivo | Responsabilidade identificada |
+| Arquivo | Responsabilidade |
 | --- | --- |
-| `buscar_ocorrencias.py` | Busca e consulta de ocorrências. |
+| `analisar_dados.py` | Indicadores: totais, taxa de conclusão e contagens por categoria, gravidade e status. |
+| `buscar_ocorrencias.py` | Pesquisa de ocorrências (todas ou por status). |
 | `cadastrar.py` | Cadastro de novos registros. |
-| `classificacao.py` | Classificação das ocorrências. |
-| `editar_ocorrencia.py` | Edição de informações, incluindo status e gravidade. |
+| `classificacao.py` | Classificação de categoria e gravidade (IA opcional e plano B por palavras-chave). |
 | `exibir_ocorrencias_paginadas.py` | Exibição dos registros de forma paginada. |
-| `visualizar_ocorrencia.py` | Visualização dos detalhes de uma ocorrência. |
+| `historico.py` | Tela do histórico, do evento mais recente para o mais antigo. |
+| `importar.py` | Importação dos registros brutos, validando um a um. |
+| `matriz.py` | Matriz categoria × status, hierarquia de pendências e interpretação. |
+| `validacao.py` | Regras que recusam registros inconsistentes. |
+| `visualizar_ocorrencia.py` | Detalhes de uma ocorrência, com edição de status, gravidade, categoria, descrição e local. |
 
 #### `src/utils/`
 
 Reúne funções auxiliares utilizadas pelo sistema:
 
-| Arquivo | Responsabilidade identificada |
+| Arquivo | Responsabilidade |
 | --- | --- |
-| `converter_enum.py` | Apoio à conversão e utilização de enumerações. |
-| `exibir_card.py` | Organização e apresentação de informações em formato de card. |
+| `converter_enum.py` | Conversão de texto para as enumerações. |
+| `exibir_card.py` | Apresentação de informações em formato de card. |
+| `google_genai.py` | Chamada ao Gemini (usada só se a IA estiver disponível). |
 | `input_numero.py` | Apoio à entrada e validação de valores numéricos. |
-
-#### `src/utils/registros/`
-
-Contém módulos auxiliares relacionados ao tratamento e à apresentação dos registros:
-
-| Arquivo | Responsabilidade a confirmar |
-| --- | --- |
-| `analisar_dados.py` | Análise e organização dos dados das ocorrências. |
-| `arquivos.py` | Operações auxiliares relacionadas aos arquivos. |
-| `atualizar.py` | Rotinas auxiliares de atualização. |
-| `importar.py` | Rotinas de importação de dados. |
-| `mostrar.py` | Apresentação de informações dos registros. |
 
 #### `src/sistema.py`
 
-Arquivo localizado diretamente na pasta `src`, fora das quatro subpastas. É o arquivo indicado para a execução e integração do sistema, devendo ser confirmado como ponto de entrada da aplicação.
+Ponto de entrada da aplicação (`python src/sistema.py`). Mostra o menu principal e chama os módulos de `services`.
 
 ---
 
@@ -209,44 +218,65 @@ Arquivo localizado diretamente na pasta `src`, fora das quatro subpastas. É o a
 
 O projeto utiliza recursos de Python para organizar as informações e implementar as funcionalidades.
 
-Entre os elementos identificados estão:
+Elementos de modelagem: **Enum** (categorias, gravidades e status), **Dataclass** (`Ocorrencia`), **CSV** (persistência) e **funções e módulos** organizados em `models`, `repository`, `services` e `utils`.
 
-- **Enum:** utilizado para padronizar categorias, gravidades e status.
-- **Dataclass:** utilizada no modelo `Ocorrencia` para organizar os atributos de cada registro.
-- **CSV:** utilizado para persistência e consulta dos dados.
-- **Funções e módulos:** organizam as operações de cadastro, classificação, consulta, edição e análise.
-- **Estruturas auxiliares:** utilizadas no processamento e na apresentação das informações.
+Estruturas de dados da atividade, com exemplos reais do código:
 
-A separação entre modelo, repositório, serviços e utilitários contribui para a modularização do código, facilitando a manutenção e a evolução do sistema.
+| Estrutura | Onde aparece | Como é usada |
+| --- | --- | --- |
+| **Lista** | `CsvRepository.listar_todos()` | Devolve a lista de todas as ocorrências, percorrida com `for`. |
+| **Dicionário** | `analisar_dados.py` | Contadores por categoria, gravidade e status (`categorias["Limpeza"] += 1`). |
+| **Pilha (LIFO)** | `historico.py` | O histórico é lido do fim para o início: o evento mais recente fica no topo. |
+| **Fila (FIFO)** | `importar.py` | Os registros de `importacao.csv` são processados na ordem de chegada e a fila é esvaziada ao final. |
+| **Hierarquia** | `matriz.py` (`montar_hierarquia`) | Dicionário dentro de dicionário: categoria → status → lista de códigos. |
+| **Matriz (lista de listas)** | `matriz.py` (`montar_matriz`) | Linhas = categorias, colunas = status, com a contagem em cada célula. |
 
-> ⚠️ **Pendente de validação pela equipe:** apresentar exemplos concretos de utilização das estruturas obrigatórias da atividade, incluindo listas, filas, pilhas, dicionários, hierarquia de dados e matriz ou lista de listas. Também devem ser identificadas as condições lógicas com AND, OR e NOT utilizadas na implementação.
+Condições lógicas com **AND, OR e NOT** (`services/validacao.py`):
+
+```python
+# AND + NOT: só confere a categoria se ela foi preenchida
+if valor(linha, "categoria") != "" and valor(linha, "categoria") not in valores_do_enum(Categoria):
+
+# OR: possível e-mail na descrição ou no local
+if "@" in valor(linha, "descricao") or "@" in valor(linha, "local"):
+
+# NOT: data que não seja real e passada
+if valor(linha, "data") != "" and not data_valida(valor(linha, "data")):
+```
+
+Também há busca (filtro por status), contagem e percentuais. As decisões de fluxo usam `if/elif/else` e `match/case`.
 
 ---
 
 ## 8. Regras de negócio e validações
 
-As regras do sistema buscam manter os registros organizados e padronizados.
+- Cada ocorrência recebe um identificador único (UUID) gerado no cadastro.
+- Categorias, gravidades e status seguem as opções padronizadas (Enum).
+- O status só avança na ordem **Aberta → Em análise → Concluída**.
+- Toda mudança de situação e toda abertura é registrada em `historico.csv`.
+- As alterações são persistidas nos arquivos CSV.
+- Descrição e local são obrigatórios no cadastro (o campo não pode ficar vazio).
 
-Entre as regras identificadas estão:
+### Validação de registros inconsistentes (opção 5)
 
-- Cada ocorrência deve possuir um identificador para permitir sua localização.
-- As categorias devem seguir as opções padronizadas pelo sistema.
-- A gravidade deve representar o nível do problema registrado.
-- O status deve indicar a situação atual da ocorrência.
-- As alterações realizadas devem ser persistidas no arquivo de dados.
-- As consultas devem permitir localizar e visualizar os registros disponíveis.
+`services/validacao.py` confere cada registro importado e devolve a lista de motivos de recusa:
 
-O sistema também possui módulos auxiliares para entrada numérica, classificação e manipulação dos dados.
+| Regra | Exemplo recusado |
+| --- | --- |
+| Campos obrigatórios (`id`, `descricao`, `local`, `data`, `status`) | campo em branco |
+| Categoria, gravidade e status devem existir nas opções | categoria `Lazer`; status `Resolvida` |
+| `id` não pode se repetir | `id` já existente |
+| Data real, no formato AAAA-MM-DD e não futura | `31/02/2026` |
+| Descrição com no mínimo 5 caracteres | `ok` |
+| Sem e-mail na descrição ou no local (privacidade) | texto com `@` |
 
-> ⚠️ **Pendente de complementação:** documentar as validações efetivamente implementadas para campos obrigatórios, entradas inválidas e informações ausentes ou inconsistentes. A equipe também deve apresentar exemplos reais de expressões booleanas e condições utilizadas no código.
+Os registros recusados vão para `data/rejeitados.csv` com o motivo, e a opção 5 mostra a lista na tela.
 
 ---
 
 ## 9. Indicadores e análise dos dados
 
-O módulo `analisar_dados.py` está relacionado à análise das ocorrências armazenadas e à organização de indicadores.
-
-Entre os indicadores identificados no desenvolvimento estão:
+O módulo `analisar_dados.py` calcula os indicadores abaixo; `matriz.py` acrescenta a matriz e a interpretação.
 
 | Indicador | Forma de cálculo |
 | --- | --- |
@@ -257,67 +287,109 @@ Entre os indicadores identificados no desenvolvimento estão:
 | Taxa de conclusão | (Concluídas ÷ Total) × 100. |
 | Demandas pendentes | Abertas + Em análise. |
 
-Essas informações permitem observar a distribuição das ocorrências, identificar categorias com maior concentração de registros e acompanhar a quantidade de demandas ainda não concluídas.
+**Resultados reais com os dados iniciais** (14 ocorrências):
 
-> ⚠️ **Pendente de complementação:** inserir os resultados reais produzidos pela versão final do sistema, demonstrar as fórmulas utilizadas no código e acrescentar a interpretação dos indicadores. Caso existam outros indicadores implementados, eles também devem ser documentados.
+| Indicador | Valor |
+| --- | --- |
+| Taxa de conclusão | 28,6% (4 de 14) |
+| Pendentes | 10 (8 abertas e 2 em análise) |
+| Por categoria | Iluminação 3, Acessibilidade 3, Conservação 3, Limpeza 2 (e 3 sem categoria) |
+| Por gravidade | Baixa 5, Alta 4, Média 3, Crítica 1 (e 1 sem gravidade) |
+
+**Interpretação (opção 6):** só 4 de 14 ocorrências foram concluídas, o que indica acúmulo de demandas sem solução.
+Acessibilidade e Conservação têm o maior número de pendências (3 cada), e há 5 pendências de gravidade alta ou crítica.
+Três registros estão sem categoria e precisam ser revisados. Há empate entre Iluminação, Acessibilidade e Conservação
+(3 cada), por isso a "categoria principal" mostrada na opção 3 deve ser lida com cuidado.
 
 ---
 
 ## 10. Como executar o projeto
 
-Para executar o sistema, é necessário ter o Python instalado e acessar a pasta principal do repositório pelo terminal.
-
-Comando previsto:
+Requisito: Python 3.10 ou superior. Na pasta principal do repositório:
 
 ```bash
 python src/sistema.py
 ```
 
-Em ambientes nos quais o comando `python` não esteja configurado, pode ser necessário utilizar:
+Em ambientes nos quais o comando `python` não esteja configurado, use `python3 src/sistema.py`.
+
+O sistema funciona **sem instalar nada**. Para ativar a classificação por IA (opcional):
 
 ```bash
-python3 src/sistema.py
+pip install -r src/requirements.txt
 ```
 
-> ⚠️ **Pendente de validação:** confirmar a execução na versão final e documentar eventuais dependências necessárias.
+e crie um arquivo `.env` (modelo em `.env.example`) com `GOOGLE_API_KEY=sua_chave`.
+
+Observação: a opção 5 altera os arquivos de `data/` (importa os registros válidos e registra os recusados). Para repetir a demonstração, restaure os dados com `git checkout data/`.
 
 ---
 
 ## 11. Exemplos de utilização
 
-Os exemplos abaixo representam situações de uso compatíveis com a proposta do sistema. Os dados são fictícios e devem ser ajustados conforme as opções e as mensagens reais da aplicação.
+Exemplos reais da execução (dados fictícios).
 
 ### Cadastro de ocorrência
 
-- **Categoria:** Iluminação
-- **Descrição:** Poste com iluminação apagada
-- **Local:** Rua das Flores, 120
-- **Gravidade:** Alta
-- **Status:** Aberta
+```text
+Digite o que aconteceu: Bueiro aberto perigoso na esquina
+Digite o local: Rua das Palmeiras
+Iniciando Analise Assistida por IA
+Erro na chamada a API, usando o Fallback deterministico
+Ocorrência cadastrada com sucesso!
+```
 
-### Consulta
-
-O usuário pode consultar ocorrências cadastradas e visualizar os registros de acordo com os critérios disponíveis no sistema.
+Sem chave de IA, o plano B classifica por palavras-chave (neste exemplo, gravidade Alta).
 
 ### Atualização
 
-Uma ocorrência registrada como **Aberta** pode ter seu status alterado para **Em análise**, permitindo acompanhar a evolução da demanda.
+Em Pesquisar → Aberta → escolher uma ocorrência → iniciar análise, o status passa de **Aberta** para **Em análise** e a mudança aparece em `historico.csv` e na opção 4.
 
-### Análise
+### Importação e validação (opção 5)
 
-O módulo de análise organiza os registros e permite consultar quantidades por categoria, gravidade e status.
+```text
+Importação: 2 aceito(s) e 5 recusado(s).
 
-> ⚠️ **Pendente de complementação:** adicionar exemplos reais da execução no terminal, incluindo cadastro, consulta, atualização e apresentação dos indicadores.
+--- REGISTROS RECUSADOS ---
+ID 65bed069: Quadra sem manutenção
+   categoria desconhecida: 'Lazer'
+ID 9bc7b146: Entulho na esquina
+   data inválida: '31/02/2026'
+ID 81b07a4c: Poste apagado na rua
+   id duplicado
+ID d506f4e4: Muro com rachaduras
+   status desconhecido: 'Resolvida'
+ID a14a6be1: ok
+   descrição curta demais
+```
+
+### Histórico (opção 4)
+
+```text
+Total de eventos: 10
+2026-11-17 | 17be1d05 | Em análise -> Concluída
+2026-11-17 | 17be1d05 | Aberta -> Em análise
+2026-11-16 | cdf37634 | Em análise -> Concluída
+...
+```
+
+### Análise (opção 3)
+
+```text
+Total de ocorrências: 14
+Taxa de conclusão: 28.6%
+Ocorrências pendentes: 10
+```
 
 ---
 
 ## 12. Acessibilidade, inclusão e privacidade
 
-O projeto aborda problemas urbanos que podem afetar diferentes grupos da população, especialmente em questões relacionadas à acessibilidade, mobilidade e conservação dos espaços públicos.
+O projeto aborda problemas urbanos que afetam diferentes grupos, especialmente em acessibilidade, mobilidade e conservação dos espaços públicos. Há relação com os **ODS 10 (Redução das desigualdades)** e **11 (Cidades e comunidades sustentáveis)**: a categoria Acessibilidade (calçadas sem rampa, piso tátil danificado) permite dar visibilidade a barreiras enfrentadas por pessoas com mobilidade reduzida.
 
-A organização das ocorrências permite reunir informações sobre problemas que impactam o cotidiano dos cidadãos.
+Sobre o uso do sistema: a interface é apenas de texto, com opções numeradas e mensagens objetivas. Não há modo específico para leitor de tela, o que fica como melhoria futura.
 
-Em relação à privacidade, recomenda-se utilizar apenas as informações necessárias para identificar e acompanhar cada ocorrência, evitando a exposição de dados pessoais desnecessários.
+Em relação à privacidade, o sistema não pede nome nem contato, os dados do projeto são fictícios, e a validação recusa registros com e-mail na descrição ou no local. Recomenda-se usar apenas as informações necessárias para identificar e acompanhar cada ocorrência.
 
 ---
 
@@ -325,13 +397,16 @@ Em relação à privacidade, recomenda-se utilizar apenas as informações neces
 
 O Neighborhood Action Dashboard apresenta uma proposta de organização e acompanhamento de ocorrências urbanas por meio de uma aplicação desenvolvida em Python.
 
-A solução reúne funcionalidades de cadastro, classificação, consulta, edição e análise de dados, utilizando uma estrutura modular e arquivos locais para armazenamento.
+A solução reúne cadastro, classificação, consulta, edição, validação, histórico e análise de dados, com estrutura modular e arquivos CSV para armazenamento. O desenvolvimento permite aplicar listas, dicionários, pilha, fila, hierarquia, matriz, lógica booleana, organização em módulos e manipulação de arquivos.
 
-O desenvolvimento permite aplicar conceitos de programação, organização de dados, modularização, manipulação de arquivos e lógica computacional.
+**Limitações:**
+- O funcionamento depende da qualidade das informações cadastradas.
+- Os dados são fictícios e o projeto não se integra a órgãos públicos ou plataformas oficiais.
+- A classificação por IA não foi testada com uma chave real durante a documentação; sem ela, o sistema usa palavras-chave, que não reconhecem todos os casos (3 dos 14 registros iniciais ficaram sem categoria).
+- A busca na opção 2 é feita por listagem completa ou por status (não há busca por categoria nem por local).
+- A opção 5 altera os arquivos de dados.
 
-Como limitações, o funcionamento depende da qualidade das informações cadastradas e da atualização adequada dos registros. O projeto também possui escopo acadêmico e não representa uma integração direta com órgãos públicos ou plataformas oficiais de atendimento.
-
-> ⚠️ **Pendente de complementação:** incluir os principais aprendizados da equipe, dificuldades encontradas durante o desenvolvimento e possíveis melhorias futuras.
+**Melhorias futuras:** reconhecer mais palavras na classificação, permitir busca por categoria e local, calcular prioridade por reincidência, criar uma interface web e um banco de dados, sempre com validação humana das sugestões automáticas.
 
 ---
 
@@ -353,9 +428,3 @@ Como limitações, o funcionamento depende da qualidade das informações cadast
 - **Vídeo de apresentação:** [INSERIR LINK DO YOUTUBE]
 
 ---
-
-### Observação para a equipe
-
-Este README foi elaborado para documentar a proposta, a organização dos arquivos e as funcionalidades identificadas durante o desenvolvimento do projeto.
-
-Os itens sinalizados como pendentes precisam ser revisados e complementados, considerando a implementação real e os requisitos da Global Solution. Antes da entrega, é importante conferir os exemplos, os indicadores, as estruturas de dados e os resultados apresentados para garantir que a documentação corresponda à versão final do sistema.
