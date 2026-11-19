@@ -4,7 +4,7 @@ def exibir_card(titulo, subtitulo, conteudo):
     print("\033[H\033[J", end="")
     print()
     print("╔" + "═" * largura + "╗")
-    print("║" + "GLOBAL SOLUTION 2026.2".center(largura) + "║")
+    print("║" + "Street Wise".center(largura) + "║")
     print("╠" + "═" * largura + "╣")
     print("║" + titulo.center(largura) + "║")
     print("║" + subtitulo.center(largura) + "║")

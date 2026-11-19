@@ -51,7 +51,7 @@ def buscar_ocorrencias():
 
         opcao = input("Digite a opção desejada: ")
 
-        match opcao:
+        match opcao.upper():
             case "1":
                 ocorrencias = csv_repo.listar_todos()
                 exibir_ocorrencias_paginadas(
