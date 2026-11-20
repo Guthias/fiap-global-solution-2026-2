@@ -425,6 +425,6 @@ A solução reúne cadastro, classificação, consulta, edição, validação, h
 ## 15. Links e materiais
 
 - **Repositório GitHub:** <https://github.com/Guthias/fiap-global-solution-2026-2>
-- **Vídeo de apresentação:** [INSERIR LINK DO YOUTUBE]
+- **Vídeo de apresentação:** <https://youtu.be/FUC2AG_6iaU>
 
 ---

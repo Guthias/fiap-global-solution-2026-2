@@ -44,6 +44,3 @@ O sistema foi ajustado para abrir e funcionar normalmente mesmo sem a biblioteca
 
 A IA foi tratada como apoio. A equipe é responsável por **ler, entender, testar e explicar** todo o código entregue,
 e por conferir se o que está documentado corresponde ao que o programa faz.
-
-> **Antes de entregar, a equipe deve revisar este documento** e completar os campos marcados com `[Equipe: ...]`,
-> declarando com honestidade quem usou cada ferramenta e para quê.
