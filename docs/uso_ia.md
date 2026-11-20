@@ -23,7 +23,6 @@ O sistema foi ajustado para abrir e funcionar normalmente mesmo sem a biblioteca
 | Ferramenta | Para que foi usada |
 |---|---|
 | Claude (Anthropic) | Análise do enunciado, apoio na organização do projeto, revisão do código do repositório, sugestão e redação de correções (identificação de bugs, validação de registros, histórico de mudanças, matriz categoria × status e interpretação), geração dos dados fictícios de teste e redação do README, deste documento e do relatório |
-| [Equipe: preencher] | [Equipe: informar qualquer outra ferramenta usada por cada integrante, por exemplo para gerar código, tirar dúvidas ou revisar textos] |
 
 ### Trechos que tiveram apoio de IA
 - `src/services/validacao.py`, `src/services/importar.py`, `src/services/historico.py` e `src/services/matriz.py` (arquivos novos).
